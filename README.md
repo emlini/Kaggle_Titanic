@@ -14,4 +14,4 @@ Working in R Studio
 //set working directory using setwd()
 
 train <- read.csv("train.csv")
-//imported training table and 
+//imported training table and assigned it to object name "train"

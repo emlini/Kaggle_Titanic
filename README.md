@@ -29,8 +29,8 @@ survivors <- subset(train, train$Survived==1)
 # STEP 2a: generate graph showing distributions of survivors by sex
 
 ggplot(survivors, aes(survivors$Sex)) + geom_bar(survivors$Sex) 
-  // creates a bar chart with count of male and female survivors)
-  // eyeballing shows that there were about twice as many female survivors as male
+	// creates a bar chart with count of male and female survivors
+	// eyeballing shows that there were about twice as many female survivors as male
 
 # STEP 2b: get an actual count of male and female survivors
 

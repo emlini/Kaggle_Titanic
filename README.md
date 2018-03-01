@@ -53,7 +53,42 @@ sum(train$Sex=="male") //577 male passengers
 
 
 **Step 2d: generate graph showing distributions of survivors by age
-ggplot(survivors, aes(survivors$Age)) + geom_density(survivors$Age) //creates a density plot approximating count of survivors of different ages)
-//WHY IS DENSITY plot here more appropriate than histogram?  Perhaps because it allows for more fine-grained age display? 
-//eyeballing shows that there were about twice as many female survivors as male
 
+age <- survivors$Age   //create variable for age (for ease of reference)
+ggplot(survivors, aes(x=age)) + geom_density(aes(y=..count..))   //creates a density plot approximating count of survivors of different ages)
+//WHY IS DENSITY plot here more appropriate than histogram?  Perhaps because it allows for more fine-grained age display? 
+//bimodal, skewed distribution, indicating that suvivors clustered primarily in the 20-40yo range, with second, smaller peak under 10 yo
+
+**STEP 2e: determine distribution of ages of all passengers
+
+allpassage <- train$Age //variable for age for table containing all passengers
+ggplot(train, aes(x=allpassage)) + geom_density(aes(y=..count..)) //plot of all passangers, by age
+
+//ALL PASSENGESR BY AGE PLOT LOOKS VERY SIMILAR to survivor by age plot, but want to compare the two more directly
+ggplot(train, aes(x=allpassage)) + geom_density(aes(y=..count.., group=train$Survived))  //OVERLAYS both plots, with two lines grouped by "survivial" factor
+  //THE ABOVE WORKS, but it is somewhat difficult to distinguish the two distributions (bc both same color)
+  //Am trying to figure out how to use reshape package and melt function to restructure the data so I can make the two distributions different colors
+
+**INTERIM CONCLUSION (from b/w graph): proportionally more children (under 10) survived than other age groups
+
+**STEP 2f: generate graph showing distribution of survivors by class
+
+//Class is a discrete var, so bar plot most appropriate
+class <- survivors$Pclass  //creates variable for class from survivors data subset 
+ggplot(survivors, aes(class)) + geom_bar(class) //plots the number of survivors in a bar chart by class (1st, 2nd, 3rd)
+
+//More first-class passengers survived than other classes, then 3rd, then 2nd
+
+//CHECK distribution of all passengers by class
+allclass <- train$Pclass //variable for class from full train dataset
+ggplot(train, aes(allclass)) + geom_bar(aes(allclass)) //plots the number of passengers by class
+
+**INRERIM CONCLUSION: from a comparison of the two distrubitions, look like proportionally more 1st class passengers survived than 3rd or second class passengers (could do same calculation of actual proportions as did with sex, but moving on to model now)
+  //COULD ALSO MAYBE DO A CHI-square test, or log likelihood, but should be able to do that as part of the larger model 
+
+
+**STEP 3: generate a logistic regression model of survival with age, sex, and class as predictors
+
+//POINTS TO CONSIDER when constructing the model
+    //potential sparseness of Age variable (177 passengers did not have ages listed, out of 891 total passengers)
+    //MULTICOLLINEARITY (check correlation matrix between for predictors)

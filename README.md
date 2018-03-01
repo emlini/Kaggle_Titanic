@@ -94,7 +94,7 @@ ggplot(train, aes(allclass)) + geom_bar(aes(allclass))   # plots the number of p
 //COULD ALSO MAYBE DO A CHI-square test, or log likelihood, but should be able to do that as part of the larger model 
 
 
-**STEP 3: generate a logistic regression model of survival with age, sex, and class as predictors
+# STEP 3: generate a logistic regression model of survival with age, sex, and class as predictors
 
 allsex <- train$Sex  ## created two new variables referencing sex and age in the training dataset
 allage <- train$Age
@@ -102,40 +102,40 @@ allage <- train$Age
 model_age_sex_class <- glm(formula = survived ~ allage + allsex + allclass, data = train, family = "binomial")
 
 ## OUTPUT FOR THIS MODEL:
-Call:
-glm(formula = survived ~ allage + allsex + allclass, family = "binomial", 
-    data = train)
+	Call:
+	glm(formula = survived ~ allage + allsex + allclass, family = "binomial", 
+	    data = train)
 
-Deviance Residuals: 
-    Min       1Q   Median       3Q      Max  
--2.7270  -0.6799  -0.3947   0.6483   2.4668  
+	Deviance Residuals: 
+	    Min       1Q   Median       3Q      Max  
+	-2.7270  -0.6799  -0.3947   0.6483   2.4668  
 
-Coefficients:
+	Coefficients:
              Estimate Std. Error z value Pr(>|z|)    
-(Intercept)  5.056006   0.502128  10.069  < 2e-16 ***
-allage      -0.036929   0.007628  -4.841 1.29e-06 ***
-allsexmale  -2.522131   0.207283 -12.168  < 2e-16 ***
-allclass    -1.288545   0.139259  -9.253  < 2e-16 ***
----
-Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+	(Intercept)  5.056006   0.502128  10.069  < 2e-16 ***
+	allage      -0.036929   0.007628  -4.841 1.29e-06 ***
+	allsexmale  -2.522131   0.207283 -12.168  < 2e-16 ***
+	allclass    -1.288545   0.139259  -9.253  < 2e-16 ***
+	---
+	Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
 
-(Dispersion parameter for binomial family taken to be 1)
+	(Dispersion parameter for binomial family taken to be 1)
 
-    Null deviance: 964.52  on 713  degrees of freedom
-Residual deviance: 647.29  on 710  degrees of freedom
-  (177 observations deleted due to missingness) # THIS IS A PROBLEM - losing a lot of data here
-AIC: 655.29
+	    Null deviance: 964.52  on 713  degrees of freedom
+	Residual deviance: 647.29  on 710  degrees of freedom
+	  (177 observations deleted due to missingness) # THIS IS A PROBLEM - losing a lot of data here
+	AIC: 655.29
 
-Number of Fisher Scoring iterations: 5
+	Number of Fisher Scoring iterations: 5
 
 // There will be several more models with different variables, and models will be compared according to model fit (what the best criterion to use here?  NEed to refresh knowedlge on that)
 
 // POINTS TO CONSIDER when constructing the model
-    # potential sparseness of Age variable (177 passengers did not have ages listed, out of 891 total passengers)
-      ## NEED TO IMPUTE VALUES FOR THIS (examine R tutorial linked on competition page)
-    # MULTICOLLINEARITY (check correlation matrix between for predictors)
+	// potential sparseness of Age variable (177 passengers did not have ages listed, out of 891 total passengers)
+	// NEED TO IMPUTE VALUES FOR THIS (examine R tutorial linked on competition page)
+	// MULTICOLLINEARITY (check correlation matrix between for predictors)
 
 // OTHER FACTORS to consider
-    # family size, parental status, cabin (some closer to impact?), point of embarkation (not sure how theoretically this might be relevant, but tutorial considers it)       
+    // family size, parental status, cabin (some closer to impact?), point of embarkation (not sure how theoretically this might be relevant, but tutorial considers it)       
 
-**STEP 4: actually use the final 
+# STEP 4: use the best fit model to predict survival on the test dataset 

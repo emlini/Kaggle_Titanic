@@ -24,7 +24,7 @@ train <- read.csv("train.csv") //imported training table and assigned it to obje
 # STEP 2: Examine characteristics of survivors (start with class, sex, & age, based on anecdotal reports of who survived) 
 
 survivors <- subset(train, train$Survived==1)
-  \\ create subset table 'survivors' containing only those who survived (not strictly necessary, but simplifies subsequent lines)
+	//create subset table 'survivors' containing only those who survived (not strictly necessary, but simplifies subsequent lines)
 
 # STEP 2a: generate graph showing distributions of survivors by sex
 

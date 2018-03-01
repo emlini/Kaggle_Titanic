@@ -8,35 +8,34 @@ Working in R Studio
 # STEP 1: SETUP
 
 ### libraries imported
-library(ggplot2)  # for data visualization
+library(ggplot2)   //for data visualization
 
-library(dplyr)  # set of data manipulation functions
+library(dplyr)   //set of data manipulation functions
 
-library(nlme)  # linear modeling package (MAY NOT NEED THIS)
+library(nlme)    //linear modeling package (MAY NOT NEED THIS)
 
-library(readxl) # has "subset" function that allows you to generate subset table for rows that have given value in a specific column
+library(readxl)  //has "subset" function that allows you to generate subset table for rows that have given value in a specific column
 
 ### figured out working directory using gwtwd()
 ### set working directory using setwd()
 
-train <- read.csv("train.csv")
-# imported training table and assigned it to object name "train"
+train <- read.csv("train.csv") //imported training table and assigned it to object name "train"
 
 # STEP 2: Examine characteristics of survivors (start with class, sex, & age, based on anecdotal reports of who survived) 
 
 survivors <- subset(train, train$Survived==1)
-# create subset table 'survivors' containing only those who survived (not strictly necessary, but simplifies subsequent lines)
+// create subset table 'survivors' containing only those who survived (not strictly necessary, but simplifies subsequent lines)
 
 # STEP 2a: generate graph showing distributions of survivors by sex
 
-ggplot(survivors, aes(survivors$Sex)) + geom_bar(survivors$Sex)
-# creates a bar chart with count of male and female survivors)
-# eyeballing shows that there were about twice as many female survivors as male
+ggplot(survivors, aes(survivors$Sex)) + geom_bar(survivors$Sex) 
+// creates a bar chart with count of male and female survivors)
+// eyeballing shows that there were about twice as many female survivors as male
 
 # STEP 2b: get an actual count of male and female survivors
 
-survsex <- survivors$Sex
-# Generate a subset table that includes only data from the "sex" column of the 'sirvivors' table (may not be strictly necessary, but for neatness' sake)
+survsex <- survivors$Sex  
+// Generate a subset table that includes only data from the "sex" column of the 'sirvivors' table (may not be strictly necessary, but for neatness' sake)
 
 sum(survsex=="female")
 # generates a sum of the rows for which sex = "female" (quotations bc string)

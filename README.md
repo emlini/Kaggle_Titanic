@@ -71,9 +71,10 @@ allpassage <- train$Age  # variable for age for table containing all passengers
 ggplot(train, aes(x=allpassage)) + geom_density(aes(y=..count..))   / plot of all passangers, by age
   // ALL PASSENGESR BY AGE PLOT LOOKS VERY SIMILAR to survivor by age plot, but want to compare the two more directly
 
-ggplot(train, aes(x=allpassage)) + geom_density(aes(y=..count.., group=train$Survived))    # OVERLAYS both plots, with two lines grouped by "survivial" factor
-  # THE ABOVE WORKS, but it is somewhat difficult to distinguish the two distributions (bc both same color)
-  # Am trying to figure out how to use reshape package and melt function to restructure the data so I can make the two distributions different colors
+ggplot(train, aes(x=allpassage)) + geom_density(aes(y=..count.., group=train$Survived))
+	// OVERLAYS both plots, with two lines grouped by "survivial" factor
+	// THE ABOVE WORKS, but it is somewhat difficult to distinguish the two distributions (bc both same color)
+	// Am trying to figure out how to use reshape package and melt function to restructure the data so I can make the two distributions different colors
 
 **INTERIM CONCLUSION (from b/w graph): proportionally more children (under 10) survived than other age groups
 
@@ -81,15 +82,16 @@ ggplot(train, aes(x=allpassage)) + geom_density(aes(y=..count.., group=train$Sur
 
 class <- survivors$Pclass    # creates variable for class from survivors data subset 
 ggplot(survivors, aes(class)) + geom_bar(class)   # plots the number of survivors in a bar chart by class (1st, 2nd, 3rd)
-# Class is a discrete var, so bar plot most appropriate
-# More first-class passengers survived than other classes, then 3rd, then 2nd
+// Class is a discrete var, so bar plot most appropriate
+// More first-class passengers survived than other classes, then 3rd, then 2nd
 
-# CHECK distribution of all passengers by class
+// CHECK distribution of all passengers by class
 allclass <- train$Pclass   # variable for class from full train dataset
 ggplot(train, aes(allclass)) + geom_bar(aes(allclass))   # plots the number of passengers by class
 
-**INTERIM CONCLUSION: from a visual comparison of the two plots, it looks like proportionally more 1st class passengers survived than 3rd or second class passengers (could do same calculation of actual proportions as did with sex, but moving on to model now)
-  #COULD ALSO MAYBE DO A CHI-square test, or log likelihood, but should be able to do that as part of the larger model 
+**INTERIM CONCLUSION: from a visual comparison of the two plots, it looks like proportionally more 1st class passengers survived than 3rd or second class passengers (could do same calculation of actual proportions as did with sex, but moving on to model now
+
+//COULD ALSO MAYBE DO A CHI-square test, or log likelihood, but should be able to do that as part of the larger model 
 
 
 **STEP 3: generate a logistic regression model of survival with age, sex, and class as predictors
@@ -126,14 +128,14 @@ AIC: 655.29
 
 Number of Fisher Scoring iterations: 5
 
-# There will be several more models with different variables, and models will be compared according to model fit (what the best criterion to use here?  NEed to refresh knowedlge on that)
+// There will be several more models with different variables, and models will be compared according to model fit (what the best criterion to use here?  NEed to refresh knowedlge on that)
 
-# POINTS TO CONSIDER when constructing the model
+// POINTS TO CONSIDER when constructing the model
     # potential sparseness of Age variable (177 passengers did not have ages listed, out of 891 total passengers)
       ## NEED TO IMPUTE VALUES FOR THIS (examine R tutorial linked on competition page)
     # MULTICOLLINEARITY (check correlation matrix between for predictors)
 
-# OTHER FACTORS to consider
+// OTHER FACTORS to consider
     # family size, parental status, cabin (some closer to impact?), point of embarkation (not sure how theoretically this might be relevant, but tutorial considers it)       
 
 **STEP 4: actually use the final 
